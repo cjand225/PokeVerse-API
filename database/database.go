@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"context"
 	"path/filepath"
+    
 	"github.com/joho/godotenv"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -61,26 +62,17 @@ func ConnectDatabase() *pgxpool.Pool {
 }
 
 // Query executes a database query using the provided connection pool and query string,
-// and returns the results as a slice of strings.
-//
-// The function takes a *pgxpool.Pool, representing the connection pool to the PostgreSQL database,
-// and a queryString of type string, containing the SQL query to be executed.
-//
-// The function performs the query using the provided query string and retrieves the results as a
-// slice of strings. Each element in the slice represents a single row returned by the query. The
-// order of the strings in the slice corresponds to the order of the rows returned by the query.
+// and returns the query result as a byte slice containing JSON data.
 //
 // Parameters:
 //   pool: A *pgxpool.Pool representing the connection pool to the PostgreSQL database.
 //   queryString: A string containing the SQL query to be executed.
 //
 // Return Values:
-//   []string: A slice of strings containing the results of the query. Each element in the slice
-//             represents a single row returned by the query.
-//   error: An error value, which is nil if the query is successful. If any issues occur during the
-//          query execution or scanning process, this value will contain the error details.
-func Query(pool *pgxpool.Pool, queryString string) ([]string, error) {
-    var results []string
+//   []byte: A byte slice containing the JSON data returned by the query.
+//   error: An error value if the query or scanning process fails, otherwise nil.
+func Query(pool *pgxpool.Pool, queryString string) ([]byte, error) {
+    var data []byte
 
     rows, err := pool.Query(context.Background(), queryString)
     if err != nil {
@@ -88,20 +80,18 @@ func Query(pool *pgxpool.Pool, queryString string) ([]string, error) {
     }
     defer rows.Close()
 
-    for rows.Next() {
+    if rows.Next() {
         var dbResults string
         err := rows.Scan(&dbResults)
         if err != nil {
             return nil, err
         }
-        results = append(results, dbResults)
+
+        // Assuming the database result is a JSON string
+        data = []byte(dbResults)
     }
 
-    if err := rows.Err(); err != nil {
-        return nil, err
-    }
-
-    return results, nil
+    return data, nil
 }
 
 // loadEnv loads the database configuration from a .env file and returns a Config struct
