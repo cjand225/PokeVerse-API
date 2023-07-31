@@ -6,7 +6,7 @@ PokéVerse RESTful API is an interface to the comprehensive and multilingual Pok
 [See the Database Here!](https://github.com/cjand225/PokeVerse)
 
 ## Features
-- **Extensive Pokémon Data**: The PokéVerse API includes a vast collection of Pokémon species, each with detailed information such as name, type, abilities, base stats, evolution chain, and more.
+- **Extensive Pokémon Data**: The PokéVerse API includes various endpoints that include information on vast collection of Pokémon species, each with detailed information such as name, type, abilities, base stats, evolution chain, and more.
 
 - **Multilingual Support**: The API supports multiple languages, allowing users to access Pokémon information in their preferred language.
     - English 
