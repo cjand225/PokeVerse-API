@@ -60,10 +60,10 @@ func ConnectDatabase() *pgxpool.Pool {
 // Return Values:
 //   []byte: A byte slice containing the JSON data returned by the query.
 //   error: An error value if the query or scanning process fails, otherwise nil.
-func Query(pool *pgxpool.Pool, queryString string) ([]byte, error) {
+func Query(pool *pgxpool.Pool, queryString string, args ...interface{}) ([]byte, error) {
     var data []byte
 
-    rows, err := pool.Query(context.Background(), queryString)
+    rows, err := pool.Query(context.Background(), queryString, args...)
     if err != nil {
         return nil, err
     }

@@ -51,10 +51,9 @@ func NewService(pool *pgxpool.Pool) *Service {
 //   *Pokemon: A pointer to the retrieved Pokemon data.
 //   error: An error if any issue occurs during the database query or JSON unmarshaling.
 func (s *Service) GetPokemonByID(id int, lang string) (*Pokemon, error) {
-	query := fmt.Sprintf("SELECT pokedex.getpokemon(%d, '%s')", id, lang)
-
-	byteData, err := database.Query(s.pool, query)
+	byteData, err := database.Query(s.pool, "SELECT pokedex.getpokemon($1, $2);", id, lang)
 	if err != nil {
+
 		log.Print(err.Error())
 		return nil, err
 	}
