@@ -24,14 +24,6 @@ To set up and run the PokéVerse API locally, follow these steps:
 4. Run `go mod download` to download the required dependencies.
 5. Run `go run main.go` to start the API server locally.
 
-## Unit Testing
-
-To ensure the reliability of the PokéVerse API, unit tests have been implemented. You can run the unit tests by executing the following command in the project directory:
-
-`go test ./tests -v`
-
-Review the test results to ensure that all tests pass successfully.
-
 ## Contribution
 Contributions to the PokéVerse API are welcome! If you'd like to contribute, please follow these guidelines:
 - Fork the repository and create a new branch for your feature or bug fix.
