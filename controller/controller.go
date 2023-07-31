@@ -32,7 +32,7 @@ func (con *Controller) SetupRoutes(router *gin.Engine) {
 // GetPokemonByIDHandler handles the "/pokemon/:lang/:id" GET endpoint.
 func (con *Controller) GetPokemonByIDHandler(c *gin.Context) {
 	pid := c.Param("id")
-	lang := c.Param("lang")
+	pLang := c.Param("lang")
 
 	if pid == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ID is required"})
@@ -50,17 +50,17 @@ func (con *Controller) GetPokemonByIDHandler(c *gin.Context) {
 		return
 	}
 
-	if lang == "" {
+	if pLang == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Language code is required"})
 		return
 	}
 
-	if !validation.IsValidLanguageCode(lang) {
+	if !validation.IsValidLanguageCode(pLang) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Valid Language code is required"})
 		return
 	}
 
-	data, err := con.service.GetPokemonByID(id, lang)
+	data, err := con.service.GetPokemonByID(id, pLang)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get data."})
 		return
