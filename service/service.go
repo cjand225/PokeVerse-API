@@ -3,7 +3,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
